@@ -407,9 +407,9 @@ custom:
   default:
     collect: true                  # 全天持续采集数据（爬取热榜 + RSS）
     analyze: false                 # 静默期不做 AI 分析
-    ai_mode: "current"             # AI 分析模式（晚间时间段中会覆盖为 daily）
+    ai_mode: "current"             # AI 分析模式（默认当前榜单；晚间时间段中会设为 daily）
     push: false                    # 静默期不推送
-    report_mode: "current"         # 报告模式（晚间时间段中会覆盖为 daily）
+    report_mode: "current"         # 报告模式（默认当前榜单；晚间时间段中会设为 daily）
     once:
       analyze: true                # 该时间段内只分析一次（省 API）
       push: true                   # 该时间段内只推送一次（省打扰）
@@ -424,9 +424,11 @@ custom:
       name: "晚间推送"
       start: "18:00"
       end: "20:00"                 # 2h 窗口，给 GitHub Actions 留足触发裕量
+      analyze: true                # 晚间做 AI 分析
+      ai_mode: "daily"             # AI 分析全天内容
       push: true                   # 晚间推送当日汇总
       report_mode: "daily"         # 推送当日所有新闻汇总
-      # once 继承 default（push: true）→ 窗口内只推送一次
+      # once 继承 default（analyze: true, push: true）→ 窗口内只分析/推送一次
 
 
   # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
